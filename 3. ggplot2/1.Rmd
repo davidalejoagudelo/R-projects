@@ -1,0 +1,73 @@
+---
+title: "ggplot 2"
+output: html_document
+date: "2025-06-23"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Introducción
+
+Este capítulo se centra en la construcción de gráficos usando la paquetería ggplot2. Para ello utilizaremos la base de datos de la Encuesta Nacional de Ocupación y Empleo (ENOE), la cual busca medir el salario mensual (ingreso mensual) de los mexicanos y es elaborada por el Instituto Nacional de Información y Estadística (INEGI). Esta encuesta se realiza cada trimestre.
+
+Durante este capítulo analizaremos los salarios del cuarto trimestre del 2019. Con fines educativos, utilizaremos únicamente una muestra de esta encuesta. Para trabajar con esta base de datos, es necesario primero cargarla a R, por lo que utilizaremos comandos básicos (o instrucciones) que respondan a este fin.
+
+Mas adelante, en el desarrollo el curso, ampliaremos con mayor detalle el proceso de importación de datos, el cual resulta tan amplio que dedicaremos un capítulo completo para ello. Durante el desarrollo de este capítulo, conoceremos un poco de los data_frame un tipo de objeto especial en R para almacenar información. Los detalles sobre el manejo de datos se abordan en los capítulos siguientes.
+
+```{r}
+install.packages("ggplot2")
+install.packages("readxl")
+install.packages("tidyr")
+install.packages("dplyr")
+```
+
+```{r}
+library(ggplot2)
+library(readxl)
+library(tidyr)
+library(dplyr)
+```
+
+```{r}
+library(readxl)
+mu_enoe <- read_excel("C:/Users/david/Desktop/Personal/A2/R/R-A2/0. Archivos/Archivos/3.- GGPlot 2/mu_enoe.xlsx")
+```
+
+```{r}
+str(mu_enoe)
+```
+
+```{r}
+summary(mu_enoe)
+```
+
+El ingreso mensual está en pesos mexicanos, para pasar a USD dividir en 20
+
+```{r}
+head(mu_enoe)
+```
+
+```{r}
+ggplot(data = mu_enoe)+
+  geom_point(mapping = aes(x = anios_esc, y = ingreso_mensual))
+```
+
+Estamos relacionando los años de escolaridad total, desde el colegio. Mapping es el componente completo de ejes, colores, etc
+
+```{r}
+ggplot(data = mu_enoe)+
+  geom_point(mapping = aes(x = anios_esc, y = ingreso_mensual),color = "red")
+```
+
+Podemos ver  más diferencias en los datos con otros tipos de agrupaciones. Por ejemplo, ver entre empleados formales e informales
+
+```{r}
+ggplot(data = mu_enoe)+
+  geom_point(mapping = aes(x = anios_esc, y = ingreso_mensual, color = tipo_empleo))
+```
+
+
+
+
